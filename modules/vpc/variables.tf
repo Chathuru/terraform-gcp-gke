@@ -8,22 +8,22 @@ variable "vpc_name" {
   type = string
 }
 variable "auto_create_subnetworks" {
-  type = bool
+  type    = bool
   default = false
 }
 variable "routing_mode" {
-  type = string
+  type    = string
   default = "REGIONAL"
   validation {
-    condition = var.routing_mode == "REGIONAL" || var.routing_mode == "GLOBAL"
+    condition     = var.routing_mode == "REGIONAL" || var.routing_mode == "GLOBAL"
     error_message = "Accepted values are \"REGIONAL\" and \"GLOBAL\"."
   }
 }
 variable "private_subnets" {
-  type = map
+  type    = map(any)
   default = {}
 }
 variable "public_subnets" {
-  type = map
+  type    = map(any)
   default = {}
 }

@@ -1,5 +1,5 @@
 locals {
-    private_ip_range_names = flatten([
+  private_ip_range_names = flatten([
     for region in var.private_ip_address : [
       region.name
     ]
@@ -7,7 +7,7 @@ locals {
 }
 
 resource "google_compute_global_address" "private_ip_address" {
-  count = length(var.private_ip_address)
+  count    = length(var.private_ip_address)
   provider = google-beta
 
   name          = lookup(var.private_ip_address[count.index], "name")
