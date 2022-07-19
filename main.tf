@@ -39,21 +39,14 @@ module "sql" {
   deletion_protection = false
 }
 
-#resource "google_redis_instance" "cache" {
-#  name           = "private-cache"
-#  tier           = "STANDARD_HA" #BASIC
-#  memory_size_gb = 5 # STANDARD_HA=5 BASIC=1
-#
-#  location_id             = "us-central1-a"
-#  alternative_location_id = "us-central1-f"
-#  auth_enabled = false
-#
-#  authorized_network = module.vpc.vpc_id
-#  connect_mode       = "PRIVATE_SERVICE_ACCESS" #DIRECT_PEERING
-#
-#  redis_version     = "REDIS_4_0" # STANDARD_HA version 5 or higher
-#  display_name      = "Terraform Test Instance"
-#
-#  depends_on = [google_service_networking_connection.private_vpc_connection_mysql]
-#
-#}
+module "redis" {
+  source                  = "./modules/google_redis"
+  name                    = "private"
+  tier                    = "STANDARD_HA"
+  memory_size_gb          = 5
+  location_id             = "us-central1-a"
+  alternative_location_id = "us-central1-f"
+  vpc_id                  = module.vpc.vpc_id
+  connect_mode            = "PRIVATE_SERVICE_ACCESS"
+  redis_version           = "REDIS_4_0"
+}
